@@ -1,6 +1,6 @@
 {
   "name": "dench-fetch",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "",
   "homepage": "https://github.com/luckydeench/dench#readme",
   "bugs": {
@@ -24,8 +24,8 @@
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run typecheck && npm run build",
-    "publish-beta" : "npm publish --tag beta",
-    "version-beta" : "npm version prerelease --preid=beta"
+    "publish-beta": "npm publish --tag beta",
+    "version-beta": "npm version prerelease --preid=beta"
   },
   "devDependencies": {
     "tsup": "^8.5.1",
