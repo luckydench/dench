@@ -2,3 +2,5 @@
 /dist
 /dev_readme
 /secret
+.env
+/*.tgz
