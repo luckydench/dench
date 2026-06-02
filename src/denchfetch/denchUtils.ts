@@ -1,11 +1,15 @@
 
-
-/*
-    url 기본 정규화 규칙
-    soft : baseURL의 끝엔 슬래쉬가 없어야 하며, apiURL의 시작엔 최소 한개의 슬래쉬가 있어야 한다.
-*/
+/**
+ * baseURL과 apiURL의 슬래쉬 경계부분을 정규화하는 유틸 함수입니다.
+ * 
+ * 1.  baseURL 끝의 슬래쉬를 제거하고 apiURL의 시작엔 최소 한개의 슬래쉬를 생성한다.
+ * 2.  baseURL과 apiURL에 슬래쉬가 중복 발생하는 모든 경우에 하나로 바꾼다.
+ * 
+ * @param base 
+ * @param api 
+ * @returns 
+ */
 export function boundaryNormalize(base : string, api : string) : { baseURL : string, apiURL : string}{
-
 
     base = base.replace(/\/+$/, "");
     api = "/" + api.replace(/^\/+/, "");
@@ -19,6 +23,9 @@ export function boundaryNormalize(base : string, api : string) : { baseURL : str
 
 
 /**
+ * 
+ * baseURL과 apiURL의 슬래쉬 처리를 엄격하게 정규화하는 유틸 함수입니다.
+ * 
  * 1.  baseURL 끝의 슬래쉬를 제거하고 apiURL의 시작엔 최소 한개의 슬래쉬를 생성한다.
  * 2.  baseURL과 apiURL에 슬래쉬가 중복 발생하는 모든 경우에 하나로 바꾼다.
  * 3.  apiURL의 끝 부분 슬래쉬를 제거한다.
