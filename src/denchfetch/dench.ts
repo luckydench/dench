@@ -10,10 +10,10 @@ import {
 import { runfetch, toFormData, toJson } from "./denchRunner";
 import { boundaryNormalize, hardNormalize } from "./denchUtils";
 import type { HTTPCache, HTTPCredentials, HTTPMode, HTTPRedirect, HTTPReferrerPolicy } from "../types/denchHTTPEnum";
-import type {  DenchInterface } from "../types/denchRunner";
 import type { DenchCreateBuilder, DenchGetBuilder } from "../types/denchBuilder";
 import type { DenchConfig } from "../types/denchConfig";
 import type { DenchAuthType } from "../types/denchEnum";
+import type { DenchInterface } from "../types/dench";
 
 
 
