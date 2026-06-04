@@ -1,4 +1,4 @@
-import type { DenchConfig } from "../types/dench"
+import type { DenchConfig } from "../types/denchConfig"
 import type { HTTPCache, HTTPCredentials, HTTPMode, HTTPRedirect, HTTPReferrerPolicy } from "../types/denchEnum"
 
 /**

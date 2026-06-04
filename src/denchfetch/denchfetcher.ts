@@ -1,4 +1,5 @@
-import type { DenchConfig } from "../types/dench";
+import type { DenchConfig } from "../types/denchConfig";
+
 
 
 export default async function denchfetcher<T>(url: string, config?: DenchConfig) :  Promise<Response> {
