@@ -1,6 +1,7 @@
 import type { DenchRunner } from "./denchRunner";
 import type { DenchBaseConfig } from "./denchConfig";
 import type { HTTPCache, HTTPCredentials, HTTPMode, HTTPRedirect, HTTPReferrerPolicy } from "./denchHTTPEnum";
+import type { DenchAuthType } from "./denchEnum";
 
 export interface DenchBuilder<T, R extends DenchBuilder<T, R>>{
     config : DenchBaseConfig,
@@ -8,7 +9,7 @@ export interface DenchBuilder<T, R extends DenchBuilder<T, R>>{
      * 인증 토큰 설정을 추가합니다.
      * @config { Authorization : `Bearer ${token}`}
      */
-    auth: (token: string) => R,
+    auth: (token: string, type? : DenchAuthType) => R,
 
 
     /**

@@ -13,6 +13,7 @@ import type { HTTPCache, HTTPCredentials, HTTPMode, HTTPRedirect, HTTPReferrerPo
 import type {  DenchInterface } from "../types/denchRunner";
 import type { DenchCreateBuilder, DenchGetBuilder } from "../types/denchBuilder";
 import type { DenchConfig } from "../types/denchConfig";
+import type { DenchAuthType } from "../types/denchEnum";
 
 
 
@@ -28,7 +29,7 @@ const createGetBuilder = <T>(config: DenchConfig): DenchGetBuilder<T> => ({
     },
     credentials: (credentials: HTTPCredentials) => createGetBuilder<T>(credentialsConfig(config, credentials)),
     abort: (controller: AbortController) => createGetBuilder<T>(abortConfig(config, controller)),
-    auth: (token: string) => createGetBuilder<T>(authConfig(config, token)),
+    auth: (token: string, type?: DenchAuthType) => createGetBuilder<T>(authConfig(config, token, type)),
     timeout: (ms: number) => createGetBuilder<T>(timeoutConfig(config, ms)),
     cache : (cache : HTTPCache) => createGetBuilder<T>(cacheConfig(config, cache)),
     referrerPolicy: (policy : HTTPReferrerPolicy) => createGetBuilder<T>(referrerPolicyConfig(config, policy)),
@@ -70,7 +71,7 @@ const createPostBuilder = <T>(config: DenchConfig): DenchCreateBuilder<T> => ({
     },
     credentials: (credentials: HTTPCredentials) => createPostBuilder<T>(credentialsConfig(config, credentials)),
     abort: (controller: AbortController) => createPostBuilder<T>(abortConfig(config, controller)),
-    auth: (token: string) => createPostBuilder<T>(authConfig(config, token)),
+    auth: (token: string, type?: DenchAuthType) => createPostBuilder<T>(authConfig(config, token, type)),
     mode: (mode: HTTPMode) =>  createPostBuilder<T>(modeConfig(config, mode)),
     timeout: (ms: number) => createPostBuilder<T>(timeoutConfig(config, ms)),
     cache : (cache : HTTPCache) => createPostBuilder<T>(cacheConfig(config, cache)),

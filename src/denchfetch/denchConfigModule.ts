@@ -1,4 +1,5 @@
 import type { DenchConfig } from "../types/denchConfig"
+import { DenchAuthType } from "../types/denchEnum"
 import type { HTTPCache, HTTPCredentials, HTTPMode, HTTPRedirect, HTTPReferrerPolicy } from "../types/denchHTTPEnum"
 
 /**
@@ -43,12 +44,23 @@ export function abortConfig(config : DenchConfig, controller : AbortController) 
  * 
  * @param config 
  * @param token 
+ * @param type 토큰 타입 (예: Bearer, Basic 등). 기본값은 Bearer입니다.
  * @returns 
  */
-export function authConfig(config: DenchConfig, token: string): DenchConfig {
+export function authConfig(config: DenchConfig, token: string, type?: DenchAuthType): DenchConfig {
+    if(!type){
+        type = DenchAuthType.BEARER;
+    }
+
+    let authHeaderValue : string = `${type} ${token}`;
+
+    if(type == DenchAuthType.ETC){
+        authHeaderValue = token;
+    }
+
     const header = {
         ...config.options.headers,
-        'Authorization': `Bearer ${token}`
+        'Authorization': `${authHeaderValue}`
     }
 
     return {
