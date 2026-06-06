@@ -1,5 +1,7 @@
 [한국어](/readme/README.ko.md)
 
+[Update](/readme/update)
+
 # Dench
 
 Dench is a lightweight TypeScript HTTP request builder built on top of the native

@@ -1,3 +1,8 @@
+[English](/README.md)
+
+[업데이트 정보](/readme/update)
+
+
 # Dench
 
 Dench는 네이티브 `fetch` API를 기반으로 만든 가벼운 TypeScript HTTP 요청 빌더입니다.
