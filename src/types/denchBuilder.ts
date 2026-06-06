@@ -64,6 +64,10 @@ export interface DenchBuilder<T, R extends DenchBuilder<T, R>>{
     error: (callback: (error: unknown) => void) => R,
 
 
+    /**
+     * api URL을 설정합니다.
+     */
+    api: <P = T>(api: string) => R,
 
     /**
      * URL의 슬래쉬 경계 부분을 정규화 합니다.
