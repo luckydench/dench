@@ -23,11 +23,11 @@ export interface DenchBuildUtils<T, R extends DenchBuilder<T, R>>{
      * 
      * @returns 복사된 빌더 인스턴스
      */
-    copy? : () => R
+    copy : () => R
 }
 
 
-export interface DenchBuilder<T, R extends DenchBuilder<T, R>>{
+export interface DenchBuilder<T, R extends DenchBuilder<T, R>> extends DenchBuildUtils<T, R> {
     config : DenchBaseConfig,
     /**
      * 인증 토큰 설정을 추가합니다.

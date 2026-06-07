@@ -56,7 +56,10 @@ const createGetBuilder = <T>(config: DenchConfig): DenchGetBuilder<T> => ({
             api: apiURL
         }
         return createGetBuilder<T>(newConfig);
-    }
+    },
+    copy : () => createGetBuilder<T>(config)
+
+
 })
 
 
@@ -94,7 +97,9 @@ const createPostBuilder = <T>(config: DenchConfig): DenchCreateBuilder<T> => ({
         config.baseURL = baseURL;
         config.api = apiURL;
         return createPostBuilder<T>(config);
-    }
+    },
+    copy : () => createPostBuilder<T>(config)
+
 })
 
 
