@@ -26,3 +26,6 @@ export type DenchHTTPURL =
 | `ftp://${string}` 
 | `ws://${string}` 
 | `wss://${string}`
+
+
+export type DenchURLSearchParams = ConstructorParameters<typeof URLSearchParams>[0]
