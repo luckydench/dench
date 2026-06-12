@@ -1,61 +1,74 @@
-[English](/README.md)
+<div align="center">
+  <img src="./img/Dench.png" alt="Dench 로고" width="260" />
 
-[업데이트 정보](/readme/update)
+  <h1>Dench</h1>
 
+  <p>
+    네이티브 Fetch API를 기반으로 만든 가볍고 타입 안전한 HTTP 요청 빌더
+  </p>
 
-# Dench
+  <p>
+    <a href="https://denchdocs.vercel.app/docs/intro"><strong>문서</strong></a>
+    ·
+    <a href="https://www.npmjs.com/package/dench-fetch">npm</a>
+    ·
+    <a href="../README.md">English</a>
+    ·
+    <a href="./update">업데이트 노트</a>
+  </p>
 
-Dench는 네이티브 `fetch` API를 기반으로 만든 가벼운 TypeScript HTTP 요청 빌더입니다.
+  <p>
+    <a href="https://www.npmjs.com/package/dench-fetch">
+      <img src="https://img.shields.io/npm/v/dench-fetch?label=npm" alt="npm 버전" />
+    </a>
+    <img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/Fetch_API-Native-2E7D32" alt="Fetch API" />
+    <img src="https://img.shields.io/badge/tsup-8.5-F7DF1E" alt="tsup" />
+    <img src="https://img.shields.io/badge/Vitest-4.1-6E9F18?logo=vitest&logoColor=white" alt="Vitest" />
+  </p>
+</div>
 
-반복되는 요청 설정을 짧고 읽기 쉬운 체이닝 코드로 작성할 수 있게 해줍니다.
+## Dench는 어떤 라이브러리인가요?
+
+Dench는 네이티브 `fetch` API를 작고 간결한 체이닝 요청 빌더로 감싼 TypeScript HTTP 클라이언트 라이브러리입니다.
+
+`fetch`의 동작과 유연성은 유지하면서 요청 설정을 구조적으로 작성하고, 공통 설정을 재사용하며, 타입이 지정된 응답을 받을 수 있게 해줍니다.
 
 ```ts
-import { dench } from "dench-fetch";
-
-type User = {
-  id: number;
-  name: string;
-};
-
-const api = dench("https://api.example.com");
-
-const user = await api
+const user = await dench("https://api.example.com")
   .get<User>("/users/1")
   .auth("access-token")
   .timeout(3000)
   .toJson();
 ```
 
-## 목적
+## 만든 목적
 
-Dench는 `fetch`의 기본 모델은 유지하면서, 기존의 http request fetch 사용에 대한 DX 개선을 목표로 합니다.
+Dench는 `fetch`로 HTTP 요청을 작성할 때의 개발 경험을 개선하기 위해 만들었습니다.
 
-주요 목적은 다음과 같습니다.
+- 반복되는 `RequestInit` 객체와 문자열 설정을 줄입니다.
+- TypeScript 타입을 통해 올바른 요청 작성을 돕습니다.
+- URL과 옵션 값을 작성하면서 발생하는 실수를 줄입니다.
+- 인증, timeout, abort, error 처리 같은 공통 패턴을 메서드 체이닝으로 설정합니다.
+- Fetch API의 기본 동작을 감추지 않으면서 API 클라이언트와 빌더 설정을 재사용합니다.
 
-- base URL을 기준으로 재사용 가능한 API 클라이언트를 생성합니다.
-- Ky, axios등 기존의 fetch DX 개선 라이브러리가 그러했듯 `GET`, `POST`, `PUT`, `DELETE` 요청을 타입 지원과 함께 작성합니다.
-- fetch 의 RequestInit이나 자주 보게 되는 패턴(abort, error등)을 메서드 체이닝으로 설정할 수 있으며, 이 설정 또한 재사용이 가능하게 관리합니다.
-- `toJson()`, `toResponse()` 같은 실행 메서드로 요청 시점을 명확하게 만듭니다.
-- url 타이핑 실수, 속성 값 타이핑 실수 등 종종 발생하는 fetch 작성 실수를 최소화 시킵니다.
-- 객체 작성 문법과 문자열 작성을 최소화 시키고 타입으로 규제하여 DX를 개선하고 작성 실수를 최소화 시킵니다.
+## 설치 방법
 
-
-그리고 추후 "재사용 가능성"을 염두해 둔 preset 기능을 업데이트 할 계획입니다. 기대해주세요!
-
-## 설치
+최신 안정 버전을 설치합니다.
 
 ```bash
 npm install dench-fetch
 ```
 
-(베타 버전)
+최신 베타 버전을 설치합니다.
+
 ```bash
 npm install dench-fetch@beta
 ```
 
 ## 기본 사용법
 
-### 클라이언트 생성
+base URL을 기준으로 재사용 가능한 클라이언트를 생성합니다.
 
 ```ts
 import { dench } from "dench-fetch";
@@ -63,189 +76,43 @@ import { dench } from "dench-fetch";
 const api = dench("https://api.example.com");
 ```
 
-### GET
+타입이 지정된 GET 요청을 전송합니다.
 
 ```ts
-const posts = await api
-  .get<Post[]>("/posts")
+type User = {
+  id: number;
+  name: string;
+};
+
+const user = await api
+  .get<User>("/users/1")
   .toJson();
 ```
 
-### POST JSON
+POST 요청으로 JSON 데이터를 전송합니다.
 
 ```ts
+type Post = {
+  id: number;
+  title: string;
+};
+
 const created = await api
   .post<Post>("/posts")
   .sendJson({
-    title: "Hello",
-    body: "Dench request",
+    title: "Hello, Dench",
   })
   .toJson();
 ```
 
-### PUT JSON
+메서드 체이닝으로 공통 요청 옵션을 추가합니다.
 
 ```ts
-const updated = await api
-  .put<Post>("/posts/1")
-  .sendJson({
-    title: "Updated title",
-  })
-  .toJson();
-```
-
-### DELETE
-
-```ts
-await api
-  .delete("/posts/1")
-  .toResponse();
-```
-
-## 요청 옵션
-
-Dench는 자주 사용하는 `fetch` 옵션을 빌더 메서드로 제공합니다.
-
-```ts
-import { HTTPCredentials, HTTPMode } from "dench-fetch";
-
 const result = await api
   .get<Result>("/secure")
   .auth("access-token")
-  .credentials(HTTPCredentials.INCLUDE)
-  .mode(HTTPMode.CORS)
   .timeout(5000)
   .toJson();
 ```
 
-사용 가능한 옵션 메서드는 다음과 같습니다.
-
-- `auth(token)`은 `Authorization: Bearer ...` 헤더를 추가합니다.
-- `credentials(value)`는 fetch credentials 정책을 설정합니다.
-- `abort(controller)`는 `AbortController`의 signal을 사용합니다.
-- `timeout(ms)`는 지정한 시간이 지나면 요청을 중단합니다.
-- `cache(value)`는 fetch cache 정책을 설정합니다.
-- `mode(value)`는 fetch mode를 설정합니다.
-- `redirect(value)`는 fetch redirect 정책을 설정합니다.
-- `referrerPolicy(value)`는 fetch referrer policy를 설정합니다.
-- `error(callback)`은 요청 에러 발생 시 호출할 콜백을 등록합니다.
-
-## Body Helper
-
-`POST`와 `PUT` 빌더는 요청 body 형식을 지정하는 helper를 제공합니다.
-
-```ts
-await api.post("/json").sendJson({ name: "dench" }).toJson();
-
-const form = new FormData();
-form.append("file", file);
-await api.post("/upload").sendForm(form).toResponse();
-
-await api.post("/binary").sendBlob(blob).toResponse();
-
-await api.post("/form").sendUrlEncoded({ name: "dench" }).toResponse();
-
-await api.post("/raw").sendRaw("raw body").toResponse();
-```
-
-각 helper의 동작은 다음과 같습니다.
-
-- `sendJson(data)`는 요청 body를 JSON 문자열로 변환하고 `Content-Type: application/json`을 설정합니다.
-- `sendForm(data)`는 body가 `FormData` 인스턴스일 때 사용합니다.
-- `sendBlob(data)`는 `Content-Type: application/octet-stream`으로 body를 전송합니다.
-- `sendUrlEncoded(data)`는 body를 `URLSearchParams`로 변환하여 전송합니다.
-- `sendRaw(data)`는 네이티브 `BodyInit` 값을 변환 없이 전송합니다.
-
-## 빌더 재사용
-
-`copy()`를 사용하면 공통 요청 설정을 가진 독립적인 빌더를 만들 수 있습니다.
-
-```ts
-const authenticated = api
-  .get()
-  .auth("access-token")
-  .timeout(3000);
-
-const users = authenticated.copy().api<User[]>("/users");
-const posts = authenticated.copy().api<Post[]>("/posts");
-
-const [userData, postData] = await Promise.all([
-  users.toJson(),
-  posts.toJson(),
-]);
-```
-
-## 응답 Helper
-
-요청 체인은 응답 helper를 호출할 때 실행됩니다.
-
-```ts
-const response = await api.get("/health").toResponse();
-const data = await api.get<Data>("/data").toJson();
-const formData = await api.get("/form").toFormData();
-```
-
-사용 가능한 응답 helper는 다음과 같습니다.
-
-- `toResponse()`는 네이티브 `Response`를 반환합니다.
-- `toJson()`는 응답 body를 JSON으로 파싱하고 `get<T>()`, `post<T>()`, `put<T>()`, `api<T>()`에서 지정한 타입으로 반환합니다.
-- `toFormData()`는 응답 body를 `FormData`로 파싱합니다.
-
-## URL 정규화
-
-Dench는 기본적으로 경계 정규화를 적용합니다. `baseURL` 끝의 슬래시를 제거하고 API path가 정확히 하나의 슬래시로 시작하도록 만듭니다.
-
-```ts
-const data = await dench("https://api.example.com/")
-  .get<Data>("//users//1")
-  .toJson();
-```
-
-정규화 helper는 다음과 같습니다.
-
-- `boundaryNormalize()`는 `baseURL` 끝의 슬래시를 제거하고 API path가 하나의 슬래시로 시작하도록 만듭니다. 기본 정규화 모드입니다.
-- `hardNormalize()`는 프로토콜 구분자(`https://`)를 보존하면서 URL 내부의 중복 슬래시도 정리합니다.
-- `URLNormalize(DenchURLNormalizeMode.NONE)`은 URL 조각을 정규화하지 않고 그대로 이어 붙입니다.
-
-```ts
-import { DenchURLNormalizeMode } from "dench-fetch";
-
-const response = await dench("https://api.example.com/")
-  .get("//raw-path")
-  .URLNormalize(DenchURLNormalizeMode.NONE)
-  .toResponse();
-```
-
-## 타입과 Enum
-
-Dench는 요청 빌더 타입과 HTTP 옵션 enum을 내보냅니다.
-
-```ts
-import {
-  dench,
-  HTTPCache,
-  HTTPCredentials,
-  HTTPMode,
-  HTTPRedirect,
-  HTTPReferrerPolicy,
-  DenchAuthType,
-  DenchURLNormalizeMode,
-} from "dench-fetch";
-
-import type {
-  DenchConfig,
-  DenchCreateBuilder,
-  DenchGetBuilder,
-  DenchInterface,
-  DenchRunner,
-} from "dench-fetch";
-```
-
-## 개발
-
-```bash
-npm run typecheck
-npm run build
-```
-
-이 패키지는 `tsup`으로 빌드되며, `dist` 폴더에 ESM과 CommonJS 결과물을 생성합니다.
+전체 API 사용법과 고급 예제는 [Dench 공식 문서](https://denchdocs.vercel.app/docs/intro)에서 확인할 수 있습니다.
