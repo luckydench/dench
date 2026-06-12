@@ -247,13 +247,22 @@ export const paramsConfig = (config: DenchConfig, params: DenchURLSearchParams):
     }
 
     if(params instanceof URLSearchParams){
-
+        
     }
+    //string 케이스
+    //ex : "key1=value1&key2=value2" 또는 "?key1=value1&key2=value2"
     else if(typeof params === "string"){
+        params = new URLSearchParams(params);
 
     }
+    //객체인 케이스 : Record<string, string> 또는 [string, string][]
     else if(typeof params === "object"){
-
+        if(Array.isArray(params)){
+            params = new URLSearchParams(params);
+        }
+        else{
+            params = new URLSearchParams(Object.entries(params));
+        }
     }
 
 
